@@ -1,0 +1,6 @@
+Context:
+{context}
+
+Question: {query}
+
+Please provide a comprehensive answer based on the context above.
