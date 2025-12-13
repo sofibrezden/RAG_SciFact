@@ -96,6 +96,10 @@ def render_project_description() -> None:
         document chunks using lexical (BM25), semantic, or hybrid retrieval strategies, optionally
         applies cross-encoder reranking, and then generates **evidence-grounded answers** using a
         large language model.
+        
+        **Note:** Increasing the Number of docs to use expands the document corpus available
+        for retrieval. Using more documents may improve recall and answer coverage, but can also
+        increase retrieval noise and slow down indexing and search.
         """
     )
     st.divider()
