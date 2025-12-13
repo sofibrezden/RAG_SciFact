@@ -134,10 +134,6 @@ The system uses several pre-trained models:
 - **Reranker**: `cross-encoder/ms-marco-MiniLM-L-6-v2`
 - **LLM**: OpenAI GPT-4.1 (configurable)
 
-### Dataset
-
-Currently configured to use the `beir/scifact` dataset for demonstration. The dataset contains scientific fact-checking documents.
-
 ### Chunking Strategy
 
 - **Method**: Semantic chunking using sentence transformers
@@ -168,3 +164,28 @@ rag/
 │   └── utils.py                    # Utility functions
 └── README.md                       # This file
 ```
+
+### Example Questions
+
+This system is designed for **knowledge-seeking question answering** over a scientific document corpus.
+It works best with **general, factual questions** that ask for definitions, mechanisms, or biological relevance,
+rather than questions about a specific paper or study.
+
+**Examples of suitable questions:**
+- What is gene expression?
+- Why is DNA methylation important?
+- How does methylation relate to disease?
+- Why is bisulfite sequencing used?
+- What are peripheral blood mononuclear cells?
+
+These questions are intentionally **cross-document** and **topic-oriented**, allowing the system to retrieve
+and synthesize evidence from multiple sources. The goal is to provide concise, evidence-grounded answers
+based on retrieved scientific documents.
+
+
+## 🌐 Live Demo
+
+You can try the app here:  
+👉 [Demo](link)
+
+![Demo GIF](demo/demo.gif)
