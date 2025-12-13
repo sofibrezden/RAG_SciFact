@@ -174,8 +174,4 @@ poetry.toml
 
 # LSP config files
 pyrightconfig.json
-
-# Tensorboard logs
-lightning_logs_tensorboard/
-lightning_logs_finetune/
 # End of https://www.toptal.com/developers/gitignore/api/python
