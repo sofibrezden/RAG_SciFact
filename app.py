@@ -1,6 +1,4 @@
 import streamlit as st
-from dotenv import load_dotenv
-
 from src.llm.base import BaseLLM, LLMParams
 from src.llm.openai import OpenAILLM
 from src.rag.chunking import chunk_documents
@@ -16,7 +14,6 @@ def setup_page() -> None:
     """Set up the page."""
     st.set_page_config(page_title='RAG Demo', page_icon='🔍', layout='wide')
     st.title('🔍 RAG Search Demo')
-    load_dotenv()
 
 
 def init_session_state() -> None:
