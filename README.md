@@ -56,7 +56,7 @@ In this project, **SciFact** is used purely as a document corpus for retrieval-a
 
 1. **Clone the repository**:
 ```bash
-git clone <repository-url>
+git clone https://github.com/sofibrezden/RAG_SciFact.git
 cd rag
 ```
 
