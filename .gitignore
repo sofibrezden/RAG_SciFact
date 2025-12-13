@@ -14,7 +14,7 @@ _pycache_/
 .Python
 .DS_Store
 build/
-.idea
+.idea/
 develop-eggs/
 dist/
 downloads/
