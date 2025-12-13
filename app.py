@@ -29,7 +29,7 @@ def init_session_state() -> None:
 def render_sidebar() -> tuple[str, bool, bool, int, int, str]:
     """Render the sidebar."""
     with st.sidebar:
-        st.header('⚙️ Search settings')
+        st.header('⚙ Search settings')
 
         api_key = st.text_input(
             'OpenAI API Key', value=st.session_state.api_key, type='password', help='Enter your OpenAI API key to enable LLM features'
@@ -43,7 +43,7 @@ def render_sidebar() -> tuple[str, bool, bool, int, int, str]:
         top_k = st.slider('Top-k results', 1, 20, 5)
         num_docs_to_use = st.slider('Number of docs to use', 1, 5000, 10)
 
-        if use_llm and st.button('🗑️ Clear conversation'):
+        if use_llm and st.button('🗑 Clear conversation'):
             st.session_state.conversation_history = []
             st.session_state.last_query = ''
             st.rerun()
@@ -89,6 +89,21 @@ def prepare_llm(*, use_llm: bool, api_key: str) -> BaseLLM | None:
     return OpenAILLM(LLMParams(api_key=api_key, model_name='gpt-4.1', temperature=0.0))
 
 
+def render_project_description() -> None:
+    """Render project description."""
+    st.markdown(
+        """
+        This project is a **Retrieval-Augmented Question Answering (RAG-QA) demo** built with Streamlit.
+        It uses the **BEIR SciFact (`beir/scifact`) dataset**, which contains biomedical research paper
+        abstracts commonly used for scientific fact verification. The system retrieves relevant
+        document chunks using lexical (BM25), semantic, or hybrid retrieval strategies, optionally
+        applies cross-encoder reranking, and then generates **evidence-grounded answers** using a
+        large language model.
+        """
+    )
+    st.divider()
+
+
 def run_search(*, query: str, retriever: BaseRetriever, reranker: CrossEncoderReranker, top_k: int, use_reranker: bool) -> list[dict]:
     """Run the search."""
     if use_reranker:
@@ -126,12 +141,14 @@ def main() -> None:
 
     retriever_name, use_reranker, use_llm, top_k, num_docs_to_use, api_key = render_sidebar()
 
+    render_project_description()
+
     render_conversation_history()
 
     _, retrievers, reranker = prepare_rag(num_docs_to_use)
     llm = prepare_llm(use_llm=use_llm, api_key=api_key)
 
-    query = st.text_input('Enter your question', placeholder='e.g. What evidence supports this claim?')
+    query = st.text_input('Enter your question', placeholder='e.g. What is DNA methylation?')
 
     if not st.button('🔍 Search', type='primary'):
         return
