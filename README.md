@@ -186,6 +186,6 @@ based on retrieved scientific documents.
 ## 🌐 Live Demo
 
 You can try the app here:  
-👉 [Demo](link)
+👉 [Demo](https://raglab6nlp.streamlit.app/)
 
 ![Demo GIF](demo/demo.gif)
