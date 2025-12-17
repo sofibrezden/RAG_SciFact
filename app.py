@@ -31,6 +31,8 @@ def render_sidebar() -> tuple[str, bool, bool, int, int, str]:
         api_key = st.text_input(
             'OpenAI API Key', value=st.session_state.api_key, type='password', help='Enter your OpenAI API key to enable LLM features'
         )
+        model = st.text_input("Model", value="gpt-4.1", help="Specify the OpenAI model to use.")
+        st.caption("Note: The model version must be compatible with your API key access.")
         if api_key != st.session_state.api_key:
             st.session_state.api_key = api_key
 
@@ -45,7 +47,7 @@ def render_sidebar() -> tuple[str, bool, bool, int, int, str]:
             st.session_state.last_query = ''
             st.rerun()
 
-    return retriever_name, use_reranker, use_llm, top_k, num_docs_to_use, api_key
+    return retriever_name, use_reranker, use_llm, top_k, num_docs_to_use, api_key, model
 
 
 def render_conversation_history() -> None:
@@ -78,12 +80,12 @@ def prepare_rag(num_docs: int) -> tuple[list[dict], dict[str, BaseRetriever], Cr
 
 
 @st.cache_resource
-def prepare_llm(*, use_llm: bool, api_key: str) -> BaseLLM | None:
+def prepare_llm(*, use_llm: bool, api_key: str, model: str) -> BaseLLM | None:
     """Prepare the LLM."""
     if not use_llm or not api_key:
         return None
 
-    return OpenAILLM(LLMParams(api_key=api_key, model_name='gpt-4.1', temperature=0.0))
+    return OpenAILLM(LLMParams(api_key=api_key, model_name=model, temperature=0.0))
 
 
 def render_project_description() -> None:
@@ -140,14 +142,14 @@ def main() -> None:
     setup_page()
     init_session_state()
 
-    retriever_name, use_reranker, use_llm, top_k, num_docs_to_use, api_key = render_sidebar()
+    retriever_name, use_reranker, use_llm, top_k, num_docs_to_use, api_key,model = render_sidebar()
 
     render_project_description()
 
     render_conversation_history()
 
     _, retrievers, reranker = prepare_rag(num_docs_to_use)
-    llm = prepare_llm(use_llm=use_llm, api_key=api_key)
+    llm = prepare_llm(use_llm=use_llm, api_key=api_key, model=model)
 
     query = st.text_input('Enter your question', placeholder='e.g. What is DNA methylation?')
 
